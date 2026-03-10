@@ -84,6 +84,10 @@
                         <i class="bi bi-speedometer2 me-2"></i><span class="sidebar-label">Dashboard</span>
                     </a>
 
+                    <a href="{{ route('vehicles.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">
+                        <i class="bi bi-truck me-2"></i><span class="sidebar-label">Vehicles</span>
+                    </a>
+
                     <a href="{{ route('vehicle-categories.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">
                         <i class="bi bi-grid me-2"></i><span class="sidebar-label">Vehicle Categories</span>
                     </a>

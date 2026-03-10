@@ -21,6 +21,9 @@
                     <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
                 </li>
                 <li class="nav-item d-lg-none">
+                    <a href="{{ route('vehicles.index') }}" class="nav-link {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">Vehicles</a>
+                </li>
+                <li class="nav-item d-lg-none">
                     <a href="{{ route('vehicle-categories.index') }}" class="nav-link {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">Vehicle Categories</a>
                 </li>
                 <li class="nav-item d-lg-none">
