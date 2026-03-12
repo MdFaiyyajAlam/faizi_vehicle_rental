@@ -14,6 +14,10 @@ class VehicleApiController extends Controller
     public function __construct(
         private readonly VehicleServiceInterface $vehicleService
     ) {
+        $this->middleware('permission:view_vehicles')->only(['index', 'show', 'trashed']);
+        $this->middleware('permission:create_vehicles')->only(['store']);
+        $this->middleware('permission:edit_vehicles')->only(['update']);
+        $this->middleware('permission:delete_vehicles')->only(['destroy', 'restore', 'forceDelete']);
     }
 
     public function index(Request $request): JsonResponse

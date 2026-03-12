@@ -18,6 +18,10 @@ class VehicleController extends Controller
         private readonly VehicleServiceInterface $vehicleService,
         private readonly VehicleCategoryServiceInterface $vehicleCategoryService,
     ) {
+        $this->middleware('permission:view_vehicles')->only(['index', 'show', 'trashed']);
+        $this->middleware('permission:create_vehicles')->only(['create', 'store']);
+        $this->middleware('permission:edit_vehicles')->only(['edit', 'update']);
+        $this->middleware('permission:delete_vehicles')->only(['destroy', 'restore', 'forceDelete']);
     }
 
     public function index(Request $request): View

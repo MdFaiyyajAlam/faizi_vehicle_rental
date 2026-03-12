@@ -7,7 +7,7 @@
 
             <a class="navbar-brand d-flex align-items-center fw-semibold mb-0" href="{{ route('dashboard') }}">
                 <x-application-logo class="d-inline-block" style="height: 28px; width: auto;" />
-                <span class="ms-2">Admin Dashboard</span>
+                <span class="ms-2">{{ ucfirst(Auth::user()->getRoleNames()->first() ?? 'User') }} Dashboard</span>
             </a>
         </div>
 
@@ -20,12 +20,26 @@
                 <li class="nav-item d-lg-none">
                     <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
                 </li>
-                <li class="nav-item d-lg-none">
-                    <a href="{{ route('vehicles.index') }}" class="nav-link {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">Vehicles</a>
-                </li>
-                <li class="nav-item d-lg-none">
-                    <a href="{{ route('vehicle-categories.index') }}" class="nav-link {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">Vehicle Categories</a>
-                </li>
+                @can('view_vehicles')
+                    <li class="nav-item d-lg-none">
+                        <a href="{{ route('vehicles.index') }}" class="nav-link {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">Vehicles</a>
+                    </li>
+                @endcan
+                @can('view_categories')
+                    <li class="nav-item d-lg-none">
+                        <a href="{{ route('vehicle-categories.index') }}" class="nav-link {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">Vehicle Categories</a>
+                    </li>
+                @endcan
+                @can('view_availabilities')
+                    <li class="nav-item d-lg-none">
+                        <a href="{{ route('vehicle-availabilities.index') }}" class="nav-link {{ request()->routeIs('vehicle-availabilities.*') ? 'active' : '' }}">Vehicle Availability</a>
+                    </li>
+                @endcan
+                @can('view_bookings')
+                    <li class="nav-item d-lg-none">
+                        <a href="{{ route('bookings.index') }}" class="nav-link {{ request()->routeIs('bookings.*') ? 'active' : '' }}">Bookings</a>
+                    </li>
+                @endcan
                 <li class="nav-item d-lg-none">
                     <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">Profile</a>
                 </li>

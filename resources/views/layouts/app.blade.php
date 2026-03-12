@@ -84,13 +84,29 @@
                         <i class="bi bi-speedometer2 me-2"></i><span class="sidebar-label">Dashboard</span>
                     </a>
 
-                    <a href="{{ route('vehicles.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">
-                        <i class="bi bi-truck me-2"></i><span class="sidebar-label">Vehicles</span>
-                    </a>
+                    @can('view_vehicles')
+                        <a href="{{ route('vehicles.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">
+                            <i class="bi bi-truck me-2"></i><span class="sidebar-label">Vehicles</span>
+                        </a>
+                    @endcan
 
-                    <a href="{{ route('vehicle-categories.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">
-                        <i class="bi bi-grid me-2"></i><span class="sidebar-label">Vehicle Categories</span>
-                    </a>
+                    @can('view_categories')
+                        <a href="{{ route('vehicle-categories.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicle-categories.*') ? 'active' : '' }}">
+                            <i class="bi bi-grid me-2"></i><span class="sidebar-label">Vehicle Categories</span>
+                        </a>
+                    @endcan
+
+                    @can('view_availabilities')
+                        <a href="{{ route('vehicle-availabilities.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicle-availabilities.*') ? 'active' : '' }}">
+                            <i class="bi bi-calendar2-check me-2"></i><span class="sidebar-label">Vehicle Availability</span>
+                        </a>
+                    @endcan
+
+                    @can('view_bookings')
+                        <a href="{{ route('bookings.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('bookings.*') ? 'active' : '' }}">
+                            <i class="bi bi-journal-check me-2"></i><span class="sidebar-label">Bookings</span>
+                        </a>
+                    @endcan
 
                     <a href="{{ route('profile.edit') }}" class="nav-link px-3 py-2 {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                         <i class="bi bi-person-gear me-2"></i><span class="sidebar-label">Profile Settings</span>

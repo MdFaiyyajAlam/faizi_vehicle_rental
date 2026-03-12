@@ -7,12 +7,16 @@
             </div>
 
             <div class="d-flex gap-2">
-                <a href="{{ route('vehicle-categories.trashed') }}" class="btn btn-outline-secondary btn-sm">
-                    <i class="bi bi-trash3 me-1"></i> Trash
-                </a>
-                <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-plus-circle me-1"></i> Add Category
-                </a>
+                @can('delete_categories')
+                    <a href="{{ route('vehicle-categories.trashed') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-trash3 me-1"></i> Trash
+                    </a>
+                @endcan
+                @can('create_categories')
+                    <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-circle me-1"></i> Add Category
+                    </a>
+                @endcan
             </div>
         </div>
     </x-slot>
@@ -72,16 +76,20 @@
                                             <a href="{{ route('vehicle-categories.show', $category->id) }}" class="btn btn-outline-info btn-sm">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('vehicle-categories.edit', $category->id) }}" class="btn btn-outline-primary btn-sm">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <form method="POST" action="{{ route('vehicle-categories.destroy', $category->id) }}" onsubmit="return confirm('Move this category to trash?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-outline-danger btn-sm" type="submit">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                            @can('edit_categories')
+                                                <a href="{{ route('vehicle-categories.edit', $category->id) }}" class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete_categories')
+                                                <form method="POST" action="{{ route('vehicle-categories.destroy', $category->id) }}" onsubmit="return confirm('Move this category to trash?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-danger btn-sm" type="submit">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -91,9 +99,11 @@
                                         <i class="bi bi-inboxes fs-3 text-muted d-block mb-2"></i>
                                         <h6 class="mb-1">No categories found</h6>
                                         <p class="text-muted mb-3">Create your first vehicle category to get started.</p>
-                                        <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary btn-sm">
-                                            <i class="bi bi-plus-circle me-1"></i> Add Category
-                                        </a>
+                                        @can('create_categories')
+                                            <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-plus-circle me-1"></i> Add Category
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforelse

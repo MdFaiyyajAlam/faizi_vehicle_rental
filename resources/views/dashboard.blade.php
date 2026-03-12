@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <h2 class="h4 mb-0 fw-bold text-dark">Admin Dashboard</h2>
+            <h2 class="h4 mb-0 fw-bold text-dark">{{ ucfirst(Auth::user()->getRoleNames()->first() ?? 'User') }} Dashboard</h2>
             <span class="badge text-bg-primary px-3 py-2">Welcome, {{ Auth::user()->name }}</span>
         </div>
     </x-slot>
@@ -73,12 +73,21 @@
                         <h5 class="card-title mb-0 fw-semibold">Quick Actions</h5>
                     </div>
                     <div class="card-body d-grid gap-2">
-                        <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary">
-                            <i class="bi bi-plus-circle me-1"></i> Add Vehicle Category
-                        </a>
-                        <a href="{{ route('vehicle-categories.index') }}" class="btn btn-outline-secondary">
-                            <i class="bi bi-list-ul me-1"></i> Manage Categories
-                        </a>
+                        @can('create_categories')
+                            <a href="{{ route('vehicle-categories.create') }}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-1"></i> Add Vehicle Category
+                            </a>
+                        @endcan
+                        @can('view_categories')
+                            <a href="{{ route('vehicle-categories.index') }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-list-ul me-1"></i> Manage Categories
+                            </a>
+                        @endcan
+                        @can('view_vehicles')
+                            <a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-truck me-1"></i> Manage Vehicles
+                            </a>
+                        @endcan
                         <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-person me-1"></i> Edit Profile
                         </a>

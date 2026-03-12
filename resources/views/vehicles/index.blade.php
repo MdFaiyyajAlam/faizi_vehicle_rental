@@ -7,12 +7,16 @@
             </div>
 
             <div class="d-flex gap-2">
-                <a href="{{ route('vehicles.trashed') }}" class="btn btn-outline-secondary btn-sm">
-                    <i class="bi bi-trash3 me-1"></i> Trash
-                </a>
-                <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-plus-circle me-1"></i> Add Vehicle
-                </a>
+                @can('delete_vehicles')
+                    <a href="{{ route('vehicles.trashed') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-trash3 me-1"></i> Trash
+                    </a>
+                @endcan
+                @can('create_vehicles')
+                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-circle me-1"></i> Add Vehicle
+                    </a>
+                @endcan
             </div>
         </div>
     </x-slot>
@@ -59,12 +63,16 @@
                                     <td class="text-end pe-3">
                                         <div class="d-inline-flex gap-2">
                                             <a href="{{ route('vehicles.show', $vehicle->id) }}" class="btn btn-outline-info btn-sm"><i class="bi bi-eye"></i></a>
-                                            <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                            <form method="POST" action="{{ route('vehicles.destroy', $vehicle->id) }}" onsubmit="return confirm('Move this vehicle to trash?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-outline-danger btn-sm" type="submit"><i class="bi bi-trash"></i></button>
-                                            </form>
+                                            @can('edit_vehicles')
+                                                <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                            @endcan
+                                            @can('delete_vehicles')
+                                                <form method="POST" action="{{ route('vehicles.destroy', $vehicle->id) }}" onsubmit="return confirm('Move this vehicle to trash?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-danger btn-sm" type="submit"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -73,7 +81,9 @@
                                     <td colspan="6" class="text-center py-5">
                                         <i class="bi bi-truck fs-3 text-muted d-block mb-2"></i>
                                         <h6 class="mb-1">No vehicles found</h6>
-                                        <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm mt-2">Add Vehicle</a>
+                                        @can('create_vehicles')
+                                            <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm mt-2">Add Vehicle</a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforelse

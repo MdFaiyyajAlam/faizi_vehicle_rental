@@ -58,6 +58,12 @@ class RolePermissionSeeder extends Seeder
             'approve_bookings',
             'complete_bookings',
 
+            // Availability Management
+            'view_availabilities',
+            'create_availabilities',
+            'edit_availabilities',
+            'delete_availabilities',
+
             // Payment Management
             'view_payments',
             'process_payments',
@@ -89,18 +95,18 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission, 'guard_name' => 'web']);
+            Permission::findOrCreate($permission, 'web');
         }
 
         // ============ CREATE ROLES ============
 
         // Super Admin Role (All Permissions)
-        $superAdminRole = Role::create(['name' => 'super-admin', 'guard_name' => 'web']);
-        $superAdminRole->givePermissionTo(Permission::all());
+        $superAdminRole = Role::findOrCreate('super-admin', 'web');
+        $superAdminRole->syncPermissions(Permission::all());
 
         // Admin Role
-        $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'web']);
-        $adminRole->givePermissionTo([
+        $adminRole = Role::findOrCreate('admin', 'web');
+        $adminRole->syncPermissions([
             'view_users',
             'create_users',
             'edit_users',
@@ -112,6 +118,10 @@ class RolePermissionSeeder extends Seeder
             'create_categories',
             'edit_categories',
             'delete_categories',
+            'view_availabilities',
+            'create_availabilities',
+            'edit_availabilities',
+            'delete_availabilities',
             'view_bookings',
             'approve_bookings',
             'complete_bookings',
@@ -127,12 +137,16 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Vendor Role
-        $vendorRole = Role::create(['name' => 'vendor', 'guard_name' => 'web']);
-        $vendorRole->givePermissionTo([
+        $vendorRole = Role::findOrCreate('vendor', 'web');
+        $vendorRole->syncPermissions([
             'view_vehicles',
             'create_vehicles',
             'edit_vehicles',
             'delete_vehicles',
+            'view_availabilities',
+            'create_availabilities',
+            'edit_availabilities',
+            'delete_availabilities',
             'view_bookings',
             'create_bookings',
             'edit_bookings',
@@ -144,8 +158,8 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Customer Role
-        $customerRole = Role::create(['name' => 'customer', 'guard_name' => 'web']);
-        $customerRole->givePermissionTo([
+        $customerRole = Role::findOrCreate('customer', 'web');
+        $customerRole->syncPermissions([
             'view_vehicles',
             'view_bookings',
             'create_bookings',
@@ -156,8 +170,8 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Driver Role
-        $driverRole = Role::create(['name' => 'driver', 'guard_name' => 'web']);
-        $driverRole->givePermissionTo([
+        $driverRole = Role::findOrCreate('driver', 'web');
+        $driverRole->syncPermissions([
             'view_bookings',
             'edit_bookings',
             'complete_bookings',

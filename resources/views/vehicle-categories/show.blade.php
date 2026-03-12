@@ -10,9 +10,11 @@
                 <a href="{{ route('vehicle-categories.index') }}" class="btn btn-outline-secondary btn-sm">
                     <i class="bi bi-arrow-left me-1"></i> Back
                 </a>
-                <a href="{{ route('vehicle-categories.edit', $vehicleCategory->id) }}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-pencil-square me-1"></i> Edit
-                </a>
+                @can('edit_categories')
+                    <a href="{{ route('vehicle-categories.edit', $vehicleCategory->id) }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </a>
+                @endcan
             </div>
         </div>
     </x-slot>
