@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Models\VehicleCategory;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
+        if (! Schema::hasTable('vehicle_categories') || ! Schema::hasTable('vehicles')) {
+            return view('welcome', [
+                'categories' => collect(),
+                'featuredVehicles' => collect(),
+            ]);
+        }
+
         $categories = VehicleCategory::query()
             ->where('is_active', true)
             ->with(['vehicles' => function ($query) {
