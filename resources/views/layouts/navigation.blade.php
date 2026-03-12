@@ -20,6 +20,11 @@
                 <li class="nav-item d-lg-none">
                     <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
                 </li>
+                @can('view_users')
+                    <li class="nav-item d-lg-none">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">Users</a>
+                    </li>
+                @endcan
                 @can('view_vehicles')
                     <li class="nav-item d-lg-none">
                         <a href="{{ route('vehicles.index') }}" class="nav-link {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">Vehicles</a>

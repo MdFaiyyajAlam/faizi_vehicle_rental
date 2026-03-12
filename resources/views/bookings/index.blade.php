@@ -53,6 +53,9 @@
                                     <td>
                                         <small class="d-block">Total: ₹{{ number_format((float) $booking->total_amount, 2) }}</small>
                                         <small class="text-muted">Due: ₹{{ number_format((float) $booking->due_amount, 2) }}</small>
+                                        @if((float)$booking->due_amount > 0)
+                                            <a href="{{ route('payments.create', $booking->id) }}" class="d-inline-block small mt-1 text-decoration-none">Pay now</a>
+                                        @endif
                                     </td>
                                     <td class="text-end pe-3">
                                         <div class="d-inline-flex gap-2">

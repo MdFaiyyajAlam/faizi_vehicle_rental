@@ -46,8 +46,19 @@
                             @forelse ($vehicles as $vehicle)
                                 <tr>
                                     <td class="ps-3">
-                                        <div class="fw-semibold text-dark">{{ $vehicle->brand }} {{ $vehicle->model }} ({{ $vehicle->year }})</div>
-                                        <small class="text-muted">Reg: {{ $vehicle->registration_number }}</small>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="rounded border bg-light overflow-hidden d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+                                                @if ($vehicle->thumbnail)
+                                                    <img src="{{ asset('storage/'.$vehicle->thumbnail) }}" alt="thumb" style="width:44px;height:44px;object-fit:cover;">
+                                                @else
+                                                    <i class="bi bi-car-front text-muted"></i>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <div class="fw-semibold text-dark">{{ $vehicle->brand }} {{ $vehicle->model }} ({{ $vehicle->year }})</div>
+                                                <small class="text-muted">Reg: {{ $vehicle->registration_number }}</small>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>{{ $vehicle->vendor?->name ?: '—' }}</td>
                                     <td>{{ $vehicle->category?->name ?: '—' }}</td>

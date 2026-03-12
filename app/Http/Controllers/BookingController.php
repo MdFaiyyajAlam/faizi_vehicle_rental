@@ -42,11 +42,11 @@ class BookingController extends Controller
 
     public function store(StoreBookingRequest $request): RedirectResponse
     {
-        $this->bookingService->create($request->validated());
+        $booking = $this->bookingService->create($request->validated());
 
         return redirect()
-            ->route('bookings.index')
-            ->with('status', 'Booking created successfully.');
+            ->route('payments.create', $booking->id)
+            ->with('status', 'Booking created successfully. Please complete payment.');
     }
 
     public function show(int $id): View

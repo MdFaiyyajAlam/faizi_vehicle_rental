@@ -11,7 +11,7 @@
     <div class="container-fluid px-0">
         <div class="row justify-content-center">
             <div class="col-12 col-xxl-10">
-                <form method="POST" action="{{ route('vehicles.update', $vehicle->id) }}">
+                <form method="POST" action="{{ route('vehicles.update', $vehicle->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     @include('vehicles.partials.form', ['vehicle' => $vehicle])

@@ -16,6 +16,7 @@ class BookingRepository implements BookingRepositoryInterface
                 'customer:id,name',
                 'vendor:id,name',
                 'driver:id,name',
+                'payments:id,booking_id,amount,payment_method,payment_type,status,paid_at,transaction_id',
             ])
             ->latest('id')
             ->paginate($perPage);
@@ -29,6 +30,7 @@ class BookingRepository implements BookingRepositoryInterface
                 'customer:id,name',
                 'vendor:id,name',
                 'driver:id,name',
+                'payments:id,booking_id,amount,payment_method,payment_type,status,paid_at,transaction_id',
             ])
             ->findOrFail($id);
     }

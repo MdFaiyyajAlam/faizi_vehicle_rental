@@ -13,83 +13,103 @@ class VehicleCategorySeeder extends Seeder
      */
     public function run(): void
     {
+
         $categories = [
+
             [
-                'name' => 'Hatchback',
-                'description' => 'Compact city-friendly cars suitable for daily commuting.',
-                'icon' => 'bi-car-front',
-                'features' => ['AC', '5 Seater', 'Petrol', 'City Drive'],
-                'base_price_per_hour' => 149.00,
-                'base_price_per_day' => 1499.00,
-                'base_price_per_week' => 8999.00,
-                'security_deposit' => 3000.00,
-                'min_booking_hours' => 2,
-                'max_booking_days' => 30,
-                'sort_order' => 1,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Sedan',
-                'description' => 'Comfortable mid-size cars ideal for family and office trips.',
-                'icon' => 'bi-car-front-fill',
-                'features' => ['AC', '5 Seater', 'Petrol/Diesel', 'Comfort Ride'],
-                'base_price_per_hour' => 199.00,
-                'base_price_per_day' => 1999.00,
-                'base_price_per_week' => 11999.00,
-                'security_deposit' => 4000.00,
-                'min_booking_hours' => 2,
-                'max_booking_days' => 30,
-                'sort_order' => 2,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'SUV',
-                'description' => 'Spacious vehicles for long distance travel and rough roads.',
+                'name' => 'Truck',
+                'description' => 'Heavy vehicles used for goods transport and logistics.',
                 'icon' => 'bi-truck',
-                'features' => ['AC', '7 Seater', 'Diesel', 'High Ground Clearance'],
-                'base_price_per_hour' => 299.00,
-                'base_price_per_day' => 2999.00,
-                'base_price_per_week' => 17999.00,
-                'security_deposit' => 6000.00,
-                'min_booking_hours' => 3,
-                'max_booking_days' => 30,
-                'sort_order' => 3,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Luxury',
-                'description' => 'Premium vehicles for business class and special occasions.',
-                'icon' => 'bi-stars',
-                'features' => ['Premium Interior', 'Automatic', 'Top Safety', 'Chauffeur Optional'],
-                'base_price_per_hour' => 699.00,
-                'base_price_per_day' => 6999.00,
-                'base_price_per_week' => 41999.00,
-                'security_deposit' => 15000.00,
+                'features' => ['Heavy Load', 'Diesel', 'Commercial Use'],
+                'base_price_per_hour' => 499,
+                'base_price_per_day' => 4999,
+                'base_price_per_week' => 29999,
+                'security_deposit' => 15000,
                 'min_booking_hours' => 4,
                 'max_booking_days' => 15,
-                'sort_order' => 4,
-                'is_active' => true,
+                'sort_order' => 1,
             ],
+
             [
-                'name' => 'Commercial Van',
-                'description' => 'Useful for goods transport and business logistics needs.',
-                'icon' => 'bi-truck-front',
-                'features' => ['Large Cargo Space', 'Diesel', 'Heavy Duty', 'GPS Tracking'],
-                'base_price_per_hour' => 349.00,
-                'base_price_per_day' => 3499.00,
-                'base_price_per_week' => 20999.00,
-                'security_deposit' => 8000.00,
-                'min_booking_hours' => 4,
-                'max_booking_days' => 20,
-                'sort_order' => 5,
-                'is_active' => true,
+                'name' => 'Bus',
+                'description' => 'Passenger buses for group travel and tourism.',
+                'icon' => 'bi-bus-front',
+                'features' => ['30+ Seats', 'Diesel', 'Long Distance'],
+                'base_price_per_hour' => 699,
+                'base_price_per_day' => 6999,
+                'base_price_per_week' => 41999,
+                'security_deposit' => 20000,
+                'min_booking_hours' => 6,
+                'max_booking_days' => 10,
+                'sort_order' => 2,
             ],
+
+            [
+                'name' => 'Car',
+                'description' => 'Cars for personal travel and family trips.',
+                'icon' => 'bi-car-front',
+                'features' => ['AC', '5 Seater', 'Petrol/Diesel'],
+                'base_price_per_hour' => 199,
+                'base_price_per_day' => 1999,
+                'base_price_per_week' => 11999,
+                'security_deposit' => 5000,
+                'min_booking_hours' => 2,
+                'max_booking_days' => 30,
+                'sort_order' => 3,
+            ],
+
+            [
+                'name' => 'Auto',
+                'description' => 'Three wheeler auto rickshaw for short city rides.',
+                'icon' => 'bi-truck-front',
+                'features' => ['3 Seater', 'City Ride', 'Low Fuel Cost'],
+                'base_price_per_hour' => 99,
+                'base_price_per_day' => 999,
+                'base_price_per_week' => 5999,
+                'security_deposit' => 2000,
+                'min_booking_hours' => 2,
+                'max_booking_days' => 30,
+                'sort_order' => 4,
+            ],
+
+            [
+                'name' => 'Motorcycle',
+                'description' => 'Two wheelers for quick travel and delivery services.',
+                'icon' => 'bi-bicycle',
+                'features' => ['2 Seater', 'Petrol', 'Fast Mobility'],
+                'base_price_per_hour' => 49,
+                'base_price_per_day' => 499,
+                'base_price_per_week' => 2499,
+                'security_deposit' => 1500,
+                'min_booking_hours' => 1,
+                'max_booking_days' => 30,
+                'sort_order' => 5,
+            ],
+
+            [
+                'name' => 'By Cycle',
+                'description' => 'Eco friendly bicycles for short distance travel.',
+                'icon' => 'bi-bicycle',
+                'features' => ['Single Rider', 'Eco Friendly'],
+                'base_price_per_hour' => 10,
+                'base_price_per_day' => 100,
+                'base_price_per_week' => 500,
+                'security_deposit' => 500,
+                'min_booking_hours' => 1,
+                'max_booking_days' => 30,
+                'sort_order' => 6,
+            ]
+
         ];
 
         foreach ($categories as $category) {
+
             VehicleCategory::updateOrCreate(
                 ['slug' => Str::slug($category['name'])],
-                $category + ['slug' => Str::slug($category['name'])]
+                $category + [
+                    'slug' => Str::slug($category['name']),
+                    'is_active' => true
+                ]
             );
         }
     }

@@ -52,5 +52,52 @@
                 </div>
             </div>
         </div>
+
+        <div class="row g-4 mt-1">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-semibold">Payments</h6>
+                        @if((float)$booking->due_amount > 0)
+                            <a href="{{ route('payments.create', $booking->id) }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-credit-card me-1"></i> Pay Due Amount
+                            </a>
+                        @endif
+                    </div>
+                    <div class="card-body">
+                        @if($booking->payments->isEmpty())
+                            <p class="text-muted mb-0">No payments recorded yet.</p>
+                        @else
+                            <div class="table-responsive">
+                                <table class="table table-sm align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Txn ID</th>
+                                            <th>Amount</th>
+                                            <th>Method</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Paid At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($booking->payments as $payment)
+                                            <tr>
+                                                <td><small>{{ $payment->transaction_id }}</small></td>
+                                                <td>₹{{ number_format((float)$payment->amount, 2) }}</td>
+                                                <td>{{ ucfirst(str_replace('_', ' ', $payment->payment_method)) }}</td>
+                                                <td>{{ ucfirst(str_replace('_', ' ', $payment->payment_type)) }}</td>
+                                                <td><span class="badge text-bg-success">{{ ucfirst($payment->status) }}</span></td>
+                                                <td>{{ optional($payment->paid_at)->format('d M Y, h:i A') ?: '—' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>

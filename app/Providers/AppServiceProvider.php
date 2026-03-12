@@ -6,7 +6,9 @@ use App\Repositories\Contracts\VehicleCategoryRepositoryInterface;
 use App\Repositories\Contracts\VehicleAvailabilityRepositoryInterface;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
 use App\Repositories\Contracts\BookingRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\BookingRepository;
+use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\VehicleCategoryRepository;
 use App\Repositories\Eloquent\VehicleAvailabilityRepository;
 use App\Repositories\Eloquent\VehicleRepository;
@@ -15,9 +17,11 @@ use App\Services\Contracts\BookingServiceInterface;
 use App\Services\Contracts\VehicleCategoryServiceInterface;
 use App\Services\Contracts\VehicleAvailabilityServiceInterface;
 use App\Services\Contracts\VehicleServiceInterface;
+use App\Services\Contracts\UserServiceInterface;
 use App\Services\VehicleCategoryService;
 use App\Services\VehicleAvailabilityService;
 use App\Services\VehicleService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(VehicleAvailabilityServiceInterface::class, VehicleAvailabilityService::class);
         $this->app->bind(BookingRepositoryInterface::class, BookingRepository::class);
         $this->app->bind(BookingServiceInterface::class, BookingService::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(UserServiceInterface::class, UserService::class);
     }
 
     /**

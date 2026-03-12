@@ -40,4 +40,20 @@ class HomeController extends Controller
 
         return view('welcome', compact('categories', 'featuredVehicles'));
     }
+
+    public function showVehicle(Vehicle $vehicle): View
+    {
+        $vehicle->load(['category:id,name', 'vendor:id,name']);
+
+        $relatedVehicles = Vehicle::query()
+            ->where('status', 'available')
+            ->where('category_id', $vehicle->category_id)
+            ->whereKeyNot($vehicle->id)
+            ->orderByDesc('is_featured')
+            ->orderBy('price_per_day')
+            ->take(4)
+            ->get();
+
+        return view('vehicles.public-show', compact('vehicle', 'relatedVehicles'));
+    }
 }

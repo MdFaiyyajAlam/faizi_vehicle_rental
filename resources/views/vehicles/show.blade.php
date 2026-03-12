@@ -24,8 +24,12 @@
             <div class="col-12 col-lg-4">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body text-center">
-                        <div class="mx-auto rounded border bg-light d-flex align-items-center justify-content-center mb-3" style="width:180px;height:180px;">
-                            <i class="bi bi-truck fs-1 text-muted"></i>
+                        <div class="mx-auto rounded border bg-light d-flex align-items-center justify-content-center mb-3 overflow-hidden" style="width:180px;height:180px;">
+                            @if ($vehicle->thumbnail)
+                                <img src="{{ asset('storage/'.$vehicle->thumbnail) }}" alt="Thumbnail" style="width:100%;height:100%;object-fit:cover;">
+                            @else
+                                <i class="bi bi-truck fs-1 text-muted"></i>
+                            @endif
                         </div>
 
                         <h5 class="fw-bold mb-1">{{ $vehicle->brand }} {{ $vehicle->model }}</h5>
@@ -70,6 +74,17 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white py-3"><h6 class="mb-0 fw-semibold">Description & Features</h6></div>
                     <div class="card-body">
+                        @if (!empty($vehicle->images))
+                            <div class="mb-3">
+                                <strong class="d-block mb-2">Gallery:</strong>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach ($vehicle->images as $image)
+                                        <img src="{{ asset('storage/'.$image) }}" alt="Vehicle image" class="rounded border" style="width:92px;height:92px;object-fit:cover;">
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
                         <p class="text-muted">{{ $vehicle->description ?: 'No description available.' }}</p>
                         <div>
                             <strong>Features:</strong>

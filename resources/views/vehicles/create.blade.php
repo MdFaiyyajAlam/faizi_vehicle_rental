@@ -11,7 +11,7 @@
     <div class="container-fluid px-0">
         <div class="row justify-content-center">
             <div class="col-12 col-xxl-10">
-                <form method="POST" action="{{ route('vehicles.store') }}">
+                <form method="POST" action="{{ route('vehicles.store') }}" enctype="multipart/form-data">
                     @csrf
                     @include('vehicles.partials.form')
 

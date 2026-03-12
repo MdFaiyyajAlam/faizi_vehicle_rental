@@ -6,10 +6,15 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VehicleAvailabilityController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleCategoryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/vehicles/{vehicle}', [HomeController::class, 'showVehicle'])
+    ->whereNumber('vehicle')
+    ->name('home.vehicles.show');
 
 Route::get('/book-now/{vehicle}', function (Vehicle $vehicle) {
     if (! auth()->check()) {
@@ -30,6 +35,44 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('users')
+        ->name('users.')
+        ->middleware('permission:view_users')
+        ->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+
+            Route::middleware('permission:create_users')->group(function () {
+                Route::get('/create', [UserController::class, 'create'])->name('create');
+                Route::post('/', [UserController::class, 'store'])->name('store');
+            });
+
+            Route::middleware('permission:edit_users')->group(function () {
+                Route::get('/{id}/edit', [UserController::class, 'edit'])
+                    ->whereNumber('id')
+                    ->name('edit');
+                Route::put('/{id}', [UserController::class, 'update'])
+                    ->whereNumber('id')
+                    ->name('update');
+            });
+
+            Route::middleware('permission:delete_users')->group(function () {
+                Route::delete('/{id}', [UserController::class, 'destroy'])
+                    ->whereNumber('id')
+                    ->name('destroy');
+                Route::get('/trash/list', [UserController::class, 'trashed'])->name('trashed');
+                Route::patch('/trash/{id}/restore', [UserController::class, 'restore'])
+                    ->whereNumber('id')
+                    ->name('restore');
+                Route::delete('/trash/{id}/force-delete', [UserController::class, 'forceDelete'])
+                    ->whereNumber('id')
+                    ->name('force-delete');
+            });
+
+            Route::get('/{id}', [UserController::class, 'show'])
+                ->whereNumber('id')
+                ->name('show');
+        });
 
     Route::prefix('vehicle-categories')
         ->name('vehicle-categories.')
@@ -143,6 +186,20 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}', [BookingController::class, 'show'])
                 ->whereNumber('id')
                 ->name('show');
+        });
+
+    Route::prefix('bookings/{booking}/payments')
+        ->name('payments.')
+        ->middleware('permission:view_bookings')
+        ->group(function () {
+            Route::get('/create', [PaymentController::class, 'create'])
+                ->whereNumber('booking')
+                ->name('create');
+
+            Route::post('/', [PaymentController::class, 'store'])
+                ->middleware('permission:create_bookings')
+                ->whereNumber('booking')
+                ->name('store');
         });
 });
 

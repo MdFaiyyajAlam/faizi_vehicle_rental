@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'email_verified_at',
         'password',
         'role', // This is your existing role field
         'status',
@@ -57,5 +60,10 @@ class User extends Authenticatable
             'phone_verified_at' => 'datetime',
             'otp_expires_at' => 'datetime',
         ];
+    }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(UserProfile::class);
     }
 }

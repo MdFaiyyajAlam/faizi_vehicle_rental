@@ -1,12 +1,11 @@
 @php
     $vehicle = $vehicle ?? null;
     $features = old('features', $vehicle?->features ?? []);
-    $images = old('images', $vehicle?->images ?? []);
+    $existingImages = is_array($vehicle?->images) ? $vehicle->images : [];
     $documents = old('documents', $vehicle?->documents ?? []);
     $coordinates = old('location_coordinates', $vehicle?->location_coordinates ?? []);
 
     $featuresValue = is_array($features) ? implode(', ', $features) : $features;
-    $imagesValue = is_array($images) ? implode(', ', $images) : $images;
     $documentsValue = is_array($documents) ? implode(', ', $documents) : $documents;
 
     $lat = is_array($coordinates) ? ($coordinates['lat'] ?? null) : null;
@@ -196,9 +195,20 @@
                 @error('features') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
             <div class="col-md-6">
-                <label class="form-label">Image URLs (comma separated)</label>
-                <input type="text" name="images" class="form-control @error('images') is-invalid @enderror" value="{{ $imagesValue }}">
+                <label class="form-label">Vehicle Images (multiple upload)</label>
+                <input id="imagesInput" type="file" name="images[]" multiple accept="image/*" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror">
                 @error('images') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                @error('images.*') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                <small id="imagesSelectedText" class="text-muted d-block mt-1">No files selected.</small>
+
+                @if (!empty($existingImages))
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        @foreach ($existingImages as $image)
+                            <img src="{{ asset('storage/'.$image) }}" alt="Vehicle image" class="rounded border" style="width:72px;height:72px;object-fit:cover;">
+                        @endforeach
+                    </div>
+                    <small class="text-muted d-block mt-1">New images upload karne par purani images replace ho jayengi.</small>
+                @endif
             </div>
 
             <div class="col-md-6">
@@ -207,9 +217,16 @@
                 @error('documents') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
             <div class="col-md-6">
-                <label class="form-label">Thumbnail URL</label>
-                <input type="text" name="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror" value="{{ old('thumbnail', $vehicle?->thumbnail) }}">
+                <label class="form-label">Thumbnail (single image)</label>
+                <input id="thumbnailInput" type="file" name="thumbnail" accept="image/*" class="form-control @error('thumbnail') is-invalid @enderror">
                 @error('thumbnail') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                <small id="thumbnailSelectedText" class="text-muted d-block mt-1">No file selected.</small>
+
+                @if (!empty($vehicle?->thumbnail))
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/'.$vehicle->thumbnail) }}" alt="Thumbnail" class="rounded border" style="width:92px;height:92px;object-fit:cover;">
+                    </div>
+                @endif
             </div>
 
             <div class="col-md-3">
@@ -259,3 +276,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        const imagesInput = document.getElementById('imagesInput');
+        const imagesSelectedText = document.getElementById('imagesSelectedText');
+        const thumbnailInput = document.getElementById('thumbnailInput');
+        const thumbnailSelectedText = document.getElementById('thumbnailSelectedText');
+
+        if (imagesInput && imagesSelectedText) {
+            imagesInput.addEventListener('change', function () {
+                const files = Array.from(this.files || []);
+
+                if (!files.length) {
+                    imagesSelectedText.textContent = 'No files selected.';
+                    return;
+                }
+
+                imagesSelectedText.textContent = 'Selected: ' + files.map(file => file.name).join(', ');
+            });
+        }
+
+        if (thumbnailInput && thumbnailSelectedText) {
+            thumbnailInput.addEventListener('change', function () {
+                const file = this.files && this.files[0] ? this.files[0] : null;
+                thumbnailSelectedText.textContent = file ? ('Selected: ' + file.name) : 'No file selected.';
+            });
+        }
+    })();
+</script>

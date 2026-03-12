@@ -84,6 +84,12 @@
                         <i class="bi bi-speedometer2 me-2"></i><span class="sidebar-label">Dashboard</span>
                     </a>
 
+                    @can('view_users')
+                        <a href="{{ route('users.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                            <i class="bi bi-people me-2"></i><span class="sidebar-label">Users</span>
+                        </a>
+                    @endcan
+
                     @can('view_vehicles')
                         <a href="{{ route('vehicles.index') }}" class="nav-link px-3 py-2 {{ request()->routeIs('vehicles.*') ? 'active' : '' }}">
                             <i class="bi bi-truck me-2"></i><span class="sidebar-label">Vehicles</span>

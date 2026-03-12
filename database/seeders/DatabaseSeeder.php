@@ -68,5 +68,9 @@ class DatabaseSeeder extends Seeder
 
             $user->syncRoles([$seedUser['spatie_role']]);
         }
+
+        $this->call([
+            VehicleSeeder::class,
+        ]);
     }
 }
